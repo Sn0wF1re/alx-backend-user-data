@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+Implement a hash_password function
 """
 import bcrypt
 
