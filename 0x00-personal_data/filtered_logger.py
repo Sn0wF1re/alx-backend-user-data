@@ -70,3 +70,26 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         database=os.getenv('PERSONAL_DATA_DB_NAME')
     )
     return connect_db
+
+
+def main() -> None:
+    """
+    obtain a database connection using get_db
+    and retrieve all rows in the users table
+    and display each row under a filtered format 
+    """
+    logger = get_logger()
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute('SELECT * FROM users')
+
+    headers = cursor.column_names
+    for row in cursor:
+        message = "".join(f'{k}={v}' for k, v in zip(headers, row))
+        logger.info(message)
+    cursor.close()
+    db.close()
+
+
+if __name__ == '__main__':
+    main()
