@@ -85,8 +85,8 @@ def main() -> None:
 
     headers = cursor.column_names
     for row in cursor:
-        message = "".join(f'{k}={v}' for k, v in zip(headers, row))
-        logger.info(message)
+        message = "".join(f'{k}={v}; ' for k, v in zip(headers, row))
+        logger.info(message.strip())
     cursor.close()
     db.close()
 
