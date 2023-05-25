@@ -4,6 +4,7 @@ Write a function called filter_datum
 """
 from typing import List
 import re
+import logging
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -11,5 +12,7 @@ def filter_datum(fields: List[str], redaction: str,
     """
     returns the log message obfuscated
     """
-    regex = re.compile(r'({})'.format('|'.join(map(re.escape, fields))))
-    return re.sub(regex, redaction, message).split(separator, len(fields))
+    for field in fields:
+        message = re.sub(f'{field}=(.*?){separator}',
+                         f'{field}={redaction}{separator}', message)
+    return message
