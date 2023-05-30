@@ -26,6 +26,13 @@ class Auth:
             if exc[-1] != '/':
                 exc += '/'
 
+        with_stars = [exc_path[:-1] for exc_path in excluded_paths
+                      if exc[-1] == '*']
+
+        for star in with_stars:
+            if path.startswith(star):
+                return False
+
         if path not in excluded_paths:
             return True
         else:
