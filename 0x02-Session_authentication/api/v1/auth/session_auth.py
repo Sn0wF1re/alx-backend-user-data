@@ -51,5 +51,5 @@ class SessionAuth(Auth):
             return False
         if user_id is None:
             return False
-        del self.user_id_by_session_id[sessionId]
+        self.user_id_by_session_id.pop(sessionId)
         return True
