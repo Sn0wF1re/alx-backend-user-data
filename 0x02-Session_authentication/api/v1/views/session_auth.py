@@ -9,7 +9,7 @@ from os import getenv
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
-def login():
+def login() -> str:
     """
     create login route
     """
@@ -36,7 +36,7 @@ def login():
 
 @app_views.route('/api/v1/auth_session/logout', methods=['DELETE'],
                  strict_slashes=False)
-def logout():
+def logout() -> str:
     """
     create logout route
     """
