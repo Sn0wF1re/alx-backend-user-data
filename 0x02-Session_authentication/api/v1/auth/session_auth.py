@@ -54,5 +54,5 @@ class SessionAuth(Auth):
         try:
             self.user_id_by_session_id.pop(sessionId, None)
             return True
-        except Exception:
+        except KeyError:
             return False
