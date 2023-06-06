@@ -11,7 +11,7 @@ AUTH = Auth()
 
 
 @app.route('/')
-def index():
+def index() -> str:
     """
     Return a JSON payload
     """
@@ -20,7 +20,7 @@ def index():
 
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
-def reg():
+def users() -> str:
     """
     Register a user
     """
