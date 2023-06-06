@@ -47,13 +47,27 @@ class DB:
         Returns the first row found in the users table
         as filtered by the method's input arguments.
         """
-        cols = [
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+        except Exception:
+            raise InvalidRequestError
+        if user is None:
+            raise NoResultFound
+        return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        use find_user_by to locate the user to update,
+        then will update the user's attributes as passed
+        in the method's arguments then commit changes to the database.
+        """
+        user = self.find_user_by(id=user_id)
+        attrs = [
             'id', 'email', 'hashed_password', 'session_id', 'reset_token'
         ]
-        for k in kwargs.keys():
-            if k not in cols:
-                raise InvalidRequestError
-        result = self._session.query(User).filter_by(**kwargs).first()
-        if result is None:
-            raise NoResultFound
-        return result
+        for k, v in kwargs.items():
+            if k not in attrs:
+                raise ValueError
+            setattr(user, k, v)
+        self._session.commit()
+        return None
